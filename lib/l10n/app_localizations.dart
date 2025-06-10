@@ -144,7 +144,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{count}h'**
-  String durationHours(int count);
+  String durationHours(String count);
 
   /// Duration in minutes, e.g., 30m
   ///

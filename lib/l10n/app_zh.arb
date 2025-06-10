@@ -14,7 +14,7 @@
         "description": "以小时为单位的持续时间, 例如: 2小时",
         "placeholders": {
             "count": {
-                "type": "int",
+                "type": "String",
                 "example": "2"
             }
         }

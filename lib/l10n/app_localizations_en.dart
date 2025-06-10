@@ -33,7 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Cancellation failed! There might be no active shutdown task.';
 
   @override
-  String durationHours(int count) {
+  String durationHours(String count) {
     return '${count}h';
   }
 

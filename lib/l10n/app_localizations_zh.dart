@@ -30,7 +30,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get toastCancelFailed => '取消失败! 可能没有正在执行的关机任务。';
 
   @override
-  String durationHours(int count) {
+  String durationHours(String count) {
     return '$count小时';
   }
 

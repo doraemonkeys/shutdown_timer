@@ -22,7 +22,7 @@
         "description": "Duration in hours, e.g., 2h",
         "placeholders": {
             "count": {
-                "type": "int",
+                "type": "String",
                 "example": "2"
             }
         }

@@ -192,9 +192,28 @@ class _HomePageState extends State<HomePage> {
 
   String _formatDurationToText(BuildContext ctx, Duration d) {
     final l10n = AppLocalizations.of(ctx)!;
-    if (d.inHours > 0) return l10n.durationHours(d.inHours);
-    if (d.inMinutes > 0) return l10n.durationMinutes(d.inMinutes);
-    return l10n.durationSeconds(d.inSeconds);
+
+    final hours = d.inHours;
+    final minutesRemainder = d.inMinutes % 60;
+    final secondsRemainder = d.inSeconds % 60;
+
+    if (d.inSeconds < 60) {
+      return l10n.durationSeconds(d.inSeconds);
+    }
+    if (d.inMinutes < 60) {
+      if (secondsRemainder == 0) {
+        return l10n.durationMinutes(d.inMinutes);
+      } else {
+        return l10n.durationMinutes(d.inMinutes) +
+            l10n.durationSeconds(secondsRemainder);
+      }
+    }
+    if (minutesRemainder == 0) {
+      return l10n.durationHours(hours.toString());
+    } else {
+      return l10n.durationHours(hours.toString()) +
+          l10n.durationMinutes(minutesRemainder);
+    }
   }
 
   void _showToast(String message, {bool isError = false}) {
