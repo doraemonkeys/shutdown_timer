@@ -80,12 +80,12 @@ echo "  - Commit: ${COMMIT_SHORT_HASH}"
 # --- 3. 构建 ZIP 文件名 ---
 # 根据分支名决定最终的文件名结构
 GIT_PART=""
-if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
-    GIT_PART="${BUILD_TAG}-${COMMIT_SHORT_HASH}"
-else
+if [ "$BUILD_TAG" = "unknown" ]; then
     # 清理分支名中的斜杠，替换为下划线，例如 feature/login -> feature_login
     SAFE_BRANCH_NAME=$(echo "$BRANCH" | sed 's/\//_/g')
-    GIT_PART="${SAFE_BRANCH_NAME}-${BUILD_TAG}-${COMMIT_SHORT_HASH}"
+    GIT_PART="${SAFE_BRANCH_NAME}-${COMMIT_SHORT_HASH}"
+else
+    GIT_PART="${BUILD_TAG}-${COMMIT_SHORT_HASH}"
 fi
 
 # 拼接成最终的文件名，格式：XXXX-windows-x64--v1.5.4.1-347fd25.zip
