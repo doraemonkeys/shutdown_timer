@@ -52,7 +52,7 @@ CYGWIN* | MINGW* | MSYS*)
     ;;
 esac
 
-if [ "$COMPATIBLE_SYSTEM" = "TRUE" ]; then
+if [ "$COMPATIBLE_SYSTEM" = "TRUE" ] || [ "$COMPATIBLE_SYSTEM" = "true" ]; then
     PLATFORM_NAME="${PLATFORM_NAME}-compatible"
 fi
 
