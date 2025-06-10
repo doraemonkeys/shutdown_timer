@@ -1,0 +1,93 @@
+{
+    "@@locale": "zh",
+    "appTitle": "定时关机小助手",
+
+    "toastSetTimeGreaterThanZero": "设置的时间必须大于0秒",
+    "toastUnsupportedOS": "不支持的操作系统",
+    "toastShutdownSetSuccess": "定时关机设置成功！",
+    "toastShutdownSetFailed": "设置失败! 可能是权限不足 (可尝试用管理员身份运行本程序)",
+    "toastShutdownCancelled": "已取消定时关机",
+    "toastCancelFailed": "取消失败! 可能没有正在执行的关机任务。",
+
+    "durationHours": "{count}小时",
+    "@durationHours": {
+        "description": "以小时为单位的持续时间, 例如: 2小时",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "durationMinutes": "{count}分钟",
+    "@durationMinutes": {
+        "description": "以分钟为单位的持续时间, 例如: 30分钟",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "30"
+            }
+        }
+    },
+    "durationSeconds": "{count}秒",
+    "@durationSeconds": {
+        "description": "以秒为单位的持续时间, 例如: 45秒",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "45"
+            }
+        }
+    },
+
+    "addPresetDialogTitle": "添加自定义预设",
+    "addPresetDialogLabel": "时间 (例如: 45m, 1h30m)",
+    "cancelButton": "取消",
+    "confirmButton": "确认",
+    "toastPresetAddedSuccess": "预设添加成功",
+    "toastPresetFormatError": "格式错误!",
+    "toastPresetExistsError": "预设已存在!",
+
+    "deletePresetDialogTitle": "删除预设",
+    "deletePresetDialogContent": "确定要删除预设 '{presetName}' 吗?",
+    "@deletePresetDialogContent": {
+        "description": "删除预设时的确认信息。",
+        "placeholders": {
+            "presetName": {
+                "type": "String",
+                "example": "30分钟"
+            }
+        }
+    },
+    "deleteButton": "删除",
+    "toastPresetDeleted": "预设 '{presetName}' 已删除",
+    "@toastPresetDeleted": {
+        "description": "预设删除后的提示信息。",
+        "placeholders": {
+            "presetName": {
+                "type": "String",
+                "example": "1小时"
+            }
+        }
+    },
+
+    "tooltipToggleDark": "切换到深色模式",
+    "tooltipToggleSystem": "切换到系统模式",
+    "tooltipToggleLight": "切换到浅色模式",
+    "tooltipSelectThemeColor": "选择主题颜色",
+
+    "countdownLabel": "距离关机还有",
+    "noTaskSetLabel": "未设置关机任务",
+
+    "customTimeHint": "自定义时间, 如: 1h30m",
+    "customTimeLabel": "自定义",
+    "toastTimeFormatError": "时间格式不正确！\n请使用如 '1h', '30m', '10s' 的格式",
+
+    "quickPresetsLabel": "快速预设",
+    "tooltipAddPreset": "添加预设",
+    "cancelShutdownTaskButton": "取消关机任务",
+    "tooltipSelectLanguage": "选择语言",
+    "languageSystem": "跟随系统",
+    "languageEnglish": "English",
+    "languageChineseSimplified": "简体中文"
+}

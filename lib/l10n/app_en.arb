@@ -1,0 +1,101 @@
+{
+    "@@locale": "en",
+
+    "appTitle": "Shutdown Timer Assistant",
+    "@appTitle":{},
+
+    "toastSetTimeGreaterThanZero": "Set time must be greater than 0 seconds",
+    "@toastSetTimeGreaterThanZero": {},
+    "toastUnsupportedOS": "Unsupported operating system",
+    "@toastUnsupportedOS": {},
+    "toastShutdownSetSuccess": "Shutdown timer set successfully!",
+    "@toastShutdownSetSuccess": {},
+    "toastShutdownSetFailed": "Setup failed! Possibly insufficient permissions (try running as administrator)",
+    "@toastShutdownSetFailed": {},
+    "toastShutdownCancelled": "Shutdown timer cancelled",
+    "@toastShutdownCancelled": {},
+    "toastCancelFailed": "Cancellation failed! There might be no active shutdown task.",
+    "@toastCancelFailed": {},
+
+    "durationHours": "{count}h",
+    "@durationHours": {
+        "description": "Duration in hours, e.g., 2h",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "durationMinutes": "{count}m",
+    "@durationMinutes": {
+        "description": "Duration in minutes, e.g., 30m",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "30"
+            }
+        }
+    },
+    "durationSeconds": "{count}s",
+    "@durationSeconds": {
+        "description": "Duration in seconds, e.g., 45s",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "45"
+            }
+        }
+    },
+
+    "addPresetDialogTitle": "Add Custom Preset",
+    "addPresetDialogLabel": "Time (e.g., 45m, 1h30m)",
+    "cancelButton": "Cancel",
+    "confirmButton": "Confirm",
+    "toastPresetAddedSuccess": "Preset added successfully",
+    "toastPresetFormatError": "Incorrect format!",
+    "toastPresetExistsError": "Preset already exists!",
+
+    "deletePresetDialogTitle": "Delete Preset",
+    "deletePresetDialogContent": "Are you sure you want to delete the preset '{presetName}'?",
+    "@deletePresetDialogContent": {
+        "description": "Confirmation message for deleting a preset.",
+        "placeholders": {
+            "presetName": {
+                "type": "String",
+                "example": "30m"
+            }
+        }
+    },
+    "deleteButton": "Delete",
+    "toastPresetDeleted": "Preset '{presetName}' deleted",
+    "@toastPresetDeleted": {
+        "description": "Toast message after a preset is deleted.",
+        "placeholders": {
+            "presetName": {
+                "type": "String",
+                "example": "1h"
+            }
+        }
+    },
+
+    "tooltipToggleDark": "Switch to Dark Mode",
+    "tooltipToggleSystem": "Switch to System Mode",
+    "tooltipToggleLight": "Switch to Light Mode",
+    "tooltipSelectThemeColor": "Select Theme Color",
+
+    "countdownLabel": "Time until shutdown",
+    "noTaskSetLabel": "No shutdown task set",
+
+    "customTimeHint": "Custom time, e.g., 1h30m",
+    "customTimeLabel": "Custom",
+    "toastTimeFormatError": "Incorrect time format!\nPlease use format like '1h', '30m', '10s'",
+
+    "quickPresetsLabel": "Quick Presets",
+    "tooltipAddPreset": "Add Preset",
+    "cancelShutdownTaskButton": "Cancel Shutdown Task",
+    "tooltipSelectLanguage": "Select Language",
+    "languageSystem": "System Default",
+    "languageEnglish": "English",
+    "languageChineseSimplified": "简体中文"
+}

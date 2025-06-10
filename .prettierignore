@@ -1,0 +1,3 @@
+# .prettierignore
+
+lib/l10n/*.arb
