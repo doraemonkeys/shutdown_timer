@@ -116,8 +116,25 @@ fi
 # 使用 pushd 和 popd 安全地切换目录进行压缩
 # 这样可以确保 zip 包内的文件没有多余的父级目录结构
 pushd "$SOURCE_DIR" >/dev/null
-# -r 递归压缩目录，-q 静默模式
-zip -r -q "${FINAL_ZIP_PATH}" .
+
+if [[ "$(uname -s)" == "Darwin"* ]]; then
+    # 对于 macOS，我们只打包 .app 文件
+    # 找到目录中唯一的 .app 文件
+    APP_BUNDLE=$(find . -name "*.app" -maxdepth 1)
+    if [ -z "$APP_BUNDLE" ]; then
+        echo "错误: 在 '${SOURCE_DIR}' 中未找到 .app 文件。"
+        popd >/dev/null
+        exit 1
+    fi
+    echo "  - 正在为 macOS 打包: ${APP_BUNDLE}"
+    # -r 递归压缩目录（.app 是一个目录），-q 静默模式，-y 保留符号链接
+    zip -r -q -y "${FINAL_ZIP_PATH}" "${APP_BUNDLE}"
+else
+    # 对于 Linux 和 Windows，打包整个 bundle/Release 目录的内容
+    echo "  - 正在为 ${PLATFORM_NAME} 打包所有产物..."
+    zip -r -q "${FINAL_ZIP_PATH}" .
+fi
+
 popd >/dev/null
 
 # --- 7. 完成 ---
