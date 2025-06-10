@@ -31,19 +31,16 @@ jobs:
           distribution: "adopt"
 
       - name: Setup Flutter
-        if: matrix.os == 'ubuntu-latest'
         uses: subosito/flutter-action@v2
         with:
           channel: stable
       - name: Print Flutter Info
-        if: matrix.os == 'ubuntu-latest'
         run: |
           flutter --version
           flutter doctor
 
       # download flutter dependencies(to generate pubspec.lock)
       - name: Download Flutter Dependencies
-        if: matrix.os == 'ubuntu-latest'
         working-directory: flutter/wind_send
         run: flutter pub get
       # cache flutter build
@@ -75,7 +72,6 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         env:
           CI_RUNNING: true # for build script
-          COMPATIBLE_SYSTEM: TRUE
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           ALIAS: ${{ secrets.ALIAS }}
