@@ -1,0 +1,265 @@
+name: ShutdownTimer Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-linux:
+    # runs-on: [ubuntu-latest, ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch tags
+        run: |
+          git fetch --tags || true
+          git tag --sort=-creatordate | head -n 1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "adopt"
+
+      - name: Setup Flutter
+        if: matrix.os == 'ubuntu-latest'
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Print Flutter Info
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          flutter --version
+          flutter doctor
+
+      # download flutter dependencies(to generate pubspec.lock)
+      - name: Download Flutter Dependencies
+        if: matrix.os == 'ubuntu-latest'
+        working-directory: flutter/wind_send
+        run: flutter pub get
+      # cache flutter build
+      - uses: actions/cache@v4
+        with:
+          path: |
+            flutter/wind_send/build/
+            ~/.pub-cache
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+
+      - name: Cearate Key Store
+        run: echo "$SIGNING_KEY" | base64 -d >android/app/key.jks
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+
+      - name: Run Build Script on Ubuntu 22.04
+        if: matrix.os == 'ubuntu-22.04'
+        env:
+          CI_RUNNING: TRUE # for build script
+          COMPATIBLE_SYSTEM: TRUE
+        working-directory: ./
+        run: |
+          chmod +x ./*.sh
+          ./build.sh
+
+      - name: Run Build Script
+        if: matrix.os == 'ubuntu-latest'
+        env:
+          CI_RUNNING: true # for build script
+          COMPATIBLE_SYSTEM: TRUE
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ALIAS: ${{ secrets.ALIAS }}
+          KEY_PATH: key.jks
+        working-directory: ./
+        run: |
+          chmod +x ./*.sh
+          ./build.sh
+
+        # generate test zip file
+        # run: |
+        #   mkdir -p ./bin
+        #   echo "Hello, World!" > ./bin/test.txt
+        #   zip -r ./bin/test.zip ./bin/test.txt
+        #   echo "Hello, World!" > ./bin/test.apk
+
+      - name: Archive artifacts on Ubuntu latest
+        if: matrix.os == 'ubuntu-latest'
+        id: build_archive1
+        uses: actions/upload-artifact@v4
+        with:
+          name: WindSend-Archives-ubuntu-latest
+          path: |
+            ./dist/*.zip
+          if-no-files-found: error
+
+      - name: Archive artifacts on Ubuntu 22.04
+        if: matrix.os == 'ubuntu-22.04'
+        id: build_archive2
+        uses: actions/upload-artifact@v4
+        with:
+          name: WindSend-Archives-ubuntu-22.04
+          path: |
+            ./dist/*.zip
+          if-no-files-found: error
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch tags
+        run: |
+          git fetch --tags || true
+          git tag --sort=-creatordate | head -n 1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "adopt"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: |
+          flutter --version
+          flutter doctor
+      # download flutter dependencies(to generate pubspec.lock)
+      - name: Download Flutter Dependencies
+        working-directory: flutter/wind_send
+        run: flutter pub get
+      # cache flutter build
+      - uses: actions/cache@v4
+        with:
+          path: |
+            flutter/wind_send/build/
+            ~/.pub-cache
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          path-type: "inherit"
+          install: >-
+            zip
+      - name: Run Build Script
+        shell: msys2 {0}
+        env:
+          CI_RUNNING: true # for build script
+        working-directory: ./
+        run: |
+          ./build.sh
+      - name: Archive artifacts
+        id: build_archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: WindSend-Archives-windows
+          path: |
+            ./dist/*.zip
+          if-no-files-found: error
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch tags
+        run: |
+          git fetch --tags || true
+          git tag --sort=-creatordate | head -n 1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "adopt"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Print Flutter Info
+        run: |
+          flutter --version
+      # download flutter dependencies(to generate pubspec.lock)
+      - name: Download Flutter Dependencies
+        working-directory: flutter/wind_send
+        run: flutter pub get
+      # cache flutter build
+      - uses: actions/cache@v4
+        with:
+          path: |
+            flutter/wind_send/build/
+            ~/.pub-cache
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+      - name: Run Build Script
+        env:
+          CI_RUNNING: true # for build script
+        working-directory: ./
+        run: |
+          chmod +x ./*.sh
+          ./build.sh
+
+      - name: Archive artifacts
+        id: build_archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: WindSend-Archives-macos
+          path: |
+            ./dist/*.zip
+          if-no-files-found: error
+
+  release:
+    needs: [build-linux, build-windows, build-macos]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          # name: WindSend-Archives-linux
+          path: ./Downloaded-Archives
+          merge-multiple: true
+
+      - name: Echo env
+        run: |
+          echo 'ref ${{ github.ref }}'
+          echo 'ref name ${{ github.ref_name }}'
+          echo 'sha ${{ github.sha }}'
+          echo 'actor ${{ github.actor }}'
+          echo 'repository ${{ github.repository }}'
+          echo 'repository_owner ${{ github.repository_owner }}'
+          echo 'event_name ${{ github.event_name }}'
+          echo 'event_path ${{ github.event_path }}'
+          echo 'workspace ${{ github.workspace }}'
+          echo 'action ${{ github.action }}'
+          echo 'job ${{ github.job }}'
+          echo 'run_id ${{ github.run_id }}'
+          echo 'run_number ${{ github.run_number }}'
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        # if: startsWith(github.ref, 'refs/tags/') # e.g. refs/tags/v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            ./Downloaded-Archives/*.zip
+            ./Downloaded-Archives/*.apk
+            ./Downloaded-Archives/*.dmg
+          draft: true
