@@ -98,7 +98,7 @@ jobs:
         id: build_archive1
         uses: actions/upload-artifact@v4
         with:
-          name: WindSend-Archives-ubuntu-latest
+          name: Archives-ubuntu-latest
           path: |
             ./dist/*.zip
           if-no-files-found: error
@@ -108,7 +108,7 @@ jobs:
         id: build_archive2
         uses: actions/upload-artifact@v4
         with:
-          name: WindSend-Archives-ubuntu-22.04
+          name: Archives-ubuntu-22.04
           path: |
             ./dist/*.zip
           if-no-files-found: error
@@ -166,7 +166,7 @@ jobs:
         id: build_archive
         uses: actions/upload-artifact@v4
         with:
-          name: WindSend-Archives-windows
+          name: Archives-windows
           path: |
             ./dist/*.zip
           if-no-files-found: error
@@ -217,7 +217,7 @@ jobs:
         id: build_archive
         uses: actions/upload-artifact@v4
         with:
-          name: WindSend-Archives-macos
+          name: Archives-macos
           path: |
             ./dist/*.zip
           if-no-files-found: error
@@ -231,7 +231,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          # name: WindSend-Archives-linux
+          # name: Archives-linux
           path: ./Downloaded-Archives
           merge-multiple: true
 
