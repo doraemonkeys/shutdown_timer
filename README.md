@@ -1,16 +1,13 @@
-# shutdown_timer
+# Shutdown Timer 关机小助手
 
-A new Flutter project.
+**A simple, cross-platform desktop application to schedule your computer's shutdown.**
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+**一款简洁、跨平台的桌面应用，帮你轻松设置定时关机。**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
+![EcoPaste_pm9-2h_EYtmiKBKKyRW_A](https://raw.githubusercontent.com/doraemonkeys/picture/master/1/20250610112650092.png)
