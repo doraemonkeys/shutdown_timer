@@ -259,6 +259,6 @@ jobs:
         with:
           files: |
             ./Downloaded-Archives/*.zip
-            ./Downloaded-Archives/*.apk
-            ./Downloaded-Archives/*.dmg
+            #./Downloaded-Archives/*.apk
+            #./Downloaded-Archives/*.dmg
           draft: true
