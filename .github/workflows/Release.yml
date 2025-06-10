@@ -41,7 +41,6 @@ jobs:
 
       # download flutter dependencies(to generate pubspec.lock)
       - name: Download Flutter Dependencies
-        working-directory: flutter/wind_send
         run: flutter pub get
       # cache flutter build
       - uses: actions/cache@v4
@@ -133,7 +132,6 @@ jobs:
           flutter doctor
       # download flutter dependencies(to generate pubspec.lock)
       - name: Download Flutter Dependencies
-        working-directory: flutter/wind_send
         run: flutter pub get
       # cache flutter build
       - uses: actions/cache@v4
@@ -191,7 +189,6 @@ jobs:
           flutter --version
       # download flutter dependencies(to generate pubspec.lock)
       - name: Download Flutter Dependencies
-        working-directory: flutter/wind_send
         run: flutter pub get
       # cache flutter build
       - uses: actions/cache@v4
