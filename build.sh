@@ -64,6 +64,7 @@ BRANCH=$(git branch --show-current)
 COMMIT_SHORT_HASH=$(git rev-parse --short HEAD)
 # 获取最新的 tag，如果没有 tag，则使用 'unknown'
 BUILD_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo 'unknown')
+BUILD_TAG_LATEST=$(git tag --sort=-creatordate | head -n 1 || echo 'unknown')
 
 if [ -z "$BRANCH" ]; then
     echo "⚠️  警告: 无法获取当前 Git 分支名。可能处于 'detached HEAD' 状态。"
@@ -72,7 +73,8 @@ if [ -z "$BRANCH" ]; then
 fi
 
 echo "  - 分支: ${BRANCH}"
-echo "  - Tag: ${BUILD_TAG}"
+echo "  - Tag: ${BUILD_TAG} "
+echo "  - Tag Latest: ${BUILD_TAG_LATEST}"
 echo "  - Commit: ${COMMIT_SHORT_HASH}"
 
 # --- 3. 构建 ZIP 文件名 ---
